@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Amigo Secreto</title>
+    <style>
+        body {
+            background-color: blue;
+            font-family: Arial;
+        }
+        
+        .header {
+            background-color: #4c63d2;
+            height: 200px;
+            text-align: center;
+            padding-top: 50px;
+        }
+        
+        .title {
+            color: white;
+            font-size: 40px;
+            margin: 0;
+        }
+        
+        .main {
+            background-color: #f0f0f0;
+            height: 500px;
+            padding: 20px;
+            text-align: center;
+        }
+        
+        .subtitle {
+            color: blue;
+            font-size: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .input-container {
+            margin-bottom: 20px;
+        }
+        
+        .name-input {
+            width: 250px;
+            height: 30px;
+            font-size: 14px;
+            padding: 5px;
+            border: 1px solid gray;
+        }
+        
+        .add-button {
+            width: 80px;
+            height: 42px;
+            background-color: gray;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        
+        .friends-list {
+            background-color: white;
+            width: 350px;
+            height: 150px;
+            margin: 20px auto;
+            border: 1px solid black;
+            padding: 10px;
+            overflow: scroll;
+        }
+        
+        .friend {
+            padding: 5px;
+            margin: 5px 0;
+            background-color: lightblue;
+            border: 1px solid blue;
+        }
+        
+        .sortear-button {
+            width: 150px;
+            height: 50px;
+            background-color: orange;
+            color: white;
+            border: none;
+            font-size: 16px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+        
+        .resultado {
+            margin-top: 20px;
+            padding: 20px;
+            background-color: white;
+            width: 300px;
+            margin-left: auto;
+            margin-right: auto;
+            border: 2px solid orange;
+            display: none;
+        }
+        
+        .winner-name {
+            font-size: 24px;
+            color: orange;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1 class="title">Amigo Secreto</h1>
+    </div>
+    
+    <div class="main">
+        <h2 class="subtitle">Digite o nome dos seus amigos</h2>
+        
+        <div class="input-container">
+            <input type="text" class="name-input" placeholder="Digite um nome" id="nomeInput">
+            <button class="add-button" onclick="adicionarAmigo()">Adicionar</button>
+        </div>
+        
+        <div class="friends-list" id="listaAmigos">
+            <h3>Lista de Amigos</h3>
+            <div id="amigos"></div>
+        </div>
+        
+        <button class="sortear-button" onclick="sortearAmigo()">Sortear amigo</button>
+        
+        <div class="resultado" id="resultado">
+            <h3>O amigo sorteado é:</h3>
+            <div class="winner-name" id="ganhador"></div>
+        </div>
+    </div>
+
+    <script>
+        var listaDeAmigos = [];
+        
+        function adicionarAmigo() {
+            var input = document.getElementById('nomeInput');
+            var nome = input.value;
+            
+            if (nome != '') {
+                listaDeAmigos.push(nome);
+                input.value = '';
+                mostrarAmigos();
+            } else {
+                alert('Digite um nome!');
+            }
+        }
+        
+        function mostrarAmigos() {
+            var container = document.getElementById('amigos');
+            container.innerHTML = '';
+            
+            for (var i = 0; i < listaDeAmigos.length; i++) {
+                var div = document.createElement('div');
+                div.className = 'friend';
+                div.innerHTML = listaDeAmigos[i];
+                container.appendChild(div);
+            }
+        }
+        
+        function sortearAmigo() {
+            if (listaDeAmigos.length == 0) {
+                alert('Adicione amigos primeiro!');
+                return;
+            }
+            
+            var numeroAleatorio = Math.random();
+            var indice = Math.floor(numeroAleatorio * listaDeAmigos.length);
+            var amigoSorteado = listaDeAmigos[indice];
+            
+            var resultado = document.getElementById('resultado');
+            var ganhador = document.getElementById('ganhador');
+            
+            ganhador.innerHTML = amigoSorteado;
+            resultado.style.display = 'block';
+        }
+    </script>
+</body>
+</html>
